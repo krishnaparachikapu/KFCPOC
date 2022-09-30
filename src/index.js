@@ -12,40 +12,11 @@ import {
   Easing,
 } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
+import assets from './../assets';
+import products from './../inventory'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const PAGE_WIDTH = windowWidth;
-const topMenuImmage1 = require('./../assets/statusbar_item1.png');
-const topMenuImmage2 = require('./../assets/statusbar_item2.png');
-const topMenuImmage3 = require('./../assets/statusbar_item3.png');
-const topMenuImmage4 = require('./../assets/statusbar_item4.png');
-const plate = require('./../assets/cart.png');
-const addToCartIcon = require('./../assets/add.png');
-const separator = require('./../assets/line.png');
-const locationPin = require('./../assets/location_pin.png');
-const phoneIcon = require('./../assets/phone.png');
-const kfcFries = require('./../assets/kfc_fries.png');
-
-const products = [
-  {
-    name: 'Fries',
-    price: 4,
-    courousel_icon: kfcFries,
-    cart_icon: require('./../assets/fries_cart.png'),
-  },
-  {
-    name: 'Coffee',
-    price: 3,
-    courousel_icon: require('./../assets/coke.png'),
-    cart_icon: require('./../assets/coke_cart.png'),
-  },
-  {
-    name: 'Burger',
-    price: 6,
-    courousel_icon: require('./../assets/sandwitch.png'),
-    cart_icon: require('./../assets/sandwitch_cart.png'),
-  },
-];
 
 const fabStyle = {
   top: windowHeight * 0.33,
@@ -116,13 +87,6 @@ const CartContainer = () => {
     );
   };
   const addToCart = () => {
-    let initialStyleToStartWithFab = {
-      top: windowHeight * 0.3,
-      right: 20,
-    };
-    
-
-   
     let x = windowWidth * 0.3;
     let y = windowHeight * 0.5;
     let width = 2;
@@ -156,11 +120,6 @@ const CartContainer = () => {
       }),
     ]).start(({finished}) => {
       if (finished) {
-        console.log('add to cart');
-        console.log('add to cart currentIndex', currentIndex);
-        console.log('add to cart cartProduct', cartProduct);
-        console.log('add to cart products',products);
-        console.log('add to cart products[currentIndex]',products[currentIndex]);
         const cartItems = cartProduct;
         const product = products[currentIndex];
         cartItems.push(product);
@@ -208,7 +167,7 @@ const CartContainer = () => {
       />
     );
   };
-  const fabButton = () => {
+  const addProduct = () => {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -223,7 +182,7 @@ const CartContainer = () => {
           },
           styles.addToCar,
         ]}>
-        <Image source={addToCartIcon} style={styles.addToCart} />
+        <Image source={assets.addToCartIcon} style={styles.addToCart} />
       </TouchableOpacity>
     );
   };
@@ -284,16 +243,16 @@ const CartContainer = () => {
           height: windowHeight * 0.3,
           transform:[{rotate:spinDeg}]
         }}>
-        <Animated.Image source={require('./../assets/star1.png')}
+        <Animated.Image source={assets.star1}
           style={{ marginLeft: "60%", marginTop: "10%",width:30,height:30,flex:0 }}
         ></Animated.Image>
         <View style={{flex:1}}></View>
         <View style={{ flex: 0, flexDirection: "row",padding:16 }}>
-        <Animated.Image source={require('./../assets/star1.png')}
+        <Animated.Image source={assets.star1}
           style={{ width:10,height:10 ,flex:0}}
           ></Animated.Image>
           <View style={{flex: 1}}></View>
-        <Animated.Image source={require('./../assets/star1.png')}
+        <Animated.Image source={assets.star1}
           style={{  width:20,height:20,flex:0 ,marginRight:"20%"}}
         ></Animated.Image>  
         </View>
@@ -305,13 +264,13 @@ const CartContainer = () => {
   return (
     <View style={styles.constiner}>
       {renderStart()}
-      {fabButton()}
+      {addProduct()}
       {addToCartAnimatedView()}
       <View style={styles.navBar}>
-        <Image source={topMenuImmage1} style={styles.navImage} />
-        <Image source={topMenuImmage2} style={styles.navImage} />
-        <Image source={topMenuImmage3} style={styles.navImage} />
-        <Image source={topMenuImmage4} style={styles.navImage} />
+        <Image source={assets.topMenuImage1} style={styles.navImage} />
+        <Image source={assets.topMenuImage2} style={styles.navImage} />
+        <Image source={assets.topMenuImage3} style={styles.navImage} />
+        <Image source={assets.topMenuImage4} style={styles.navImage} />
       </View>
 
       <View style={styles.productsContainer}>
@@ -357,19 +316,19 @@ const CartContainer = () => {
         />
       </View>
       <View style={styles.separator}>
-        <Image source={separator} style={{flex: 1}} />
+        <Image source={assets.separator} style={{flex: 1}} />
       </View>
       <View style={{height: windowHeight * 0.28, alignSelf: 'center'}}>
         {/* <Image source={plate} style={{ marginTop: 70 }}>
           {renderProductsInsidePlate()}
         </Image> */}
-        <ImageBackground source={plate} resizeMode="cover" style={styles.plate}>
+        <ImageBackground source={assets.plate} resizeMode="cover" style={styles.plate}>
           {renderProductsInsidePlate()}
         </ImageBackground>
       </View>
       <View style={styles.locationInfo}>
         <View style={{width: windowWidth * 0.1, marginRight: 10}}>
-          <Image source={locationPin} />
+          <Image source={assets.locationPin} />
         </View>
         <View>
           <Text
@@ -383,7 +342,7 @@ const CartContainer = () => {
           </Text>
         </View>
         <View style={{width: windowWidth * 0.1, marginLeft: 10}}>
-          <Image source={phoneIcon} />
+          <Image source={assets.phoneIcon} />
         </View>
       </View>
 
