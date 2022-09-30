@@ -85,6 +85,7 @@ const CartContainer = () => {
     new Animated.Value(0),
   );
   const [spinValue, setSpinValue] = useState(new Animated.Value(0));
+  const [cartValue, setCartValue] = useState(0);
   
 
   const renderItem = index => {
@@ -161,9 +162,11 @@ const CartContainer = () => {
         console.log('add to cart products',products);
         console.log('add to cart products[currentIndex]',products[currentIndex]);
         const cartItems = cartProduct;
-        cartItems.push(products[currentIndex]);
+        const product = products[currentIndex];
+        cartItems.push(product);
         setCartProduct(cartItems);
-        console.log('animation ended!');
+        setCartValue(cartValue + product["price"]);
+        console.log('animation ended!', product["price"]);
         Animated.timing(addToCartAnimationTop, {
           toValue: fabStyle.top,
           duration: 1,
@@ -274,7 +277,7 @@ const CartContainer = () => {
     return (
       <Animated.View style={
         {
-          zIndex: 2, position: "absolute",
+          zIndex: 0, position: "absolute",
           left: windowWidth * 0.02,
           top: windowHeight * 0.1,
           width: windowHeight * 0.3,
@@ -282,16 +285,16 @@ const CartContainer = () => {
           transform:[{rotate:spinDeg}]
         }}>
         <Animated.Image source={require('./../assets/star1.png')}
-          style={{ marginLeft: "60%", marginTop: "10%",width:40,height:40,flex:0 }}
+          style={{ marginLeft: "60%", marginTop: "10%",width:30,height:30,flex:0 }}
         ></Animated.Image>
         <View style={{flex:1}}></View>
         <View style={{ flex: 0, flexDirection: "row",padding:16 }}>
         <Animated.Image source={require('./../assets/star1.png')}
-          style={{ width:20,height:20 ,flex:0}}
+          style={{ width:10,height:10 ,flex:0}}
           ></Animated.Image>
           <View style={{flex: 1}}></View>
         <Animated.Image source={require('./../assets/star1.png')}
-          style={{  width:30,height:30,flex:0 ,marginRight:"20%"}}
+          style={{  width:20,height:20,flex:0 ,marginRight:"20%"}}
         ></Animated.Image>  
         </View>
         
@@ -329,6 +332,8 @@ const CartContainer = () => {
           onProgressChange={(offsetProgress: number, absoluteProgress: number) => {
             console.log('****** absoluteProgress', absoluteProgress);
             let toValue = 0;
+            let val = Math.trunc(absoluteProgress * 10) / 10;
+            console.log('****** val', val);
             if (absoluteProgress > 2) {
               toValue = absoluteProgress - 2;
             } else if (absoluteProgress > 1) {
@@ -343,11 +348,11 @@ const CartContainer = () => {
               duration: 0,
               useNativeDriver: true,
             }).start();
-            // Animated.timing(spinValue, {
-            //   toValue: toValue,
-            //   duration: 0,
-            //   useNativeDriver: true,
-            // }).start();
+              // Animated.timing(spinValue, {
+              //   toValue: toValue,
+              //   duration: 0,
+              //   useNativeDriver: true,
+              // }).start();
           }}
         />
       </View>
@@ -388,8 +393,12 @@ const CartContainer = () => {
             width: windowWidth * 0.65,
             alignItems: 'flex-start',
             height: '100%',
+            flexDirection: "row",
           }}>
-          <Text style={{fontSize: 25, marginLeft: '10%', marginTop: '10%'}}>
+          <Text style={{fontSize: 40, marginLeft: '15%', marginTop: '5%' }}>
+            {cartValue}
+          </Text>
+          <Text style={{fontSize: 25, marginTop: '10%'}}>
             $
           </Text>
         </View>
@@ -471,7 +480,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   paymentInfo: {
-    // flex: 1,
+    // flexDirection: "row",
     marginTop: 10,
     height: windowHeight * 0.08,
     flexDirection: 'row',
